@@ -1,6 +1,12 @@
+import os
+import ast
+
 # API_KEY = "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" 此key无效
-API_KEY = "sk-此处填API密钥"
-API_URL = "https://api.openai.com/v1/chat/completions"
+#API_KEY = "sk-此处填API密钥"
+#API_URL = "https://api.openai.com/v1/chat/completions"
+
+API_KEY = os.environ.get("OPENAI_API_KEY")
+API_URL = os.environ.get("OPENAI_API_BASE_URL")
 
 # 改为True应用代理
 USE_PROXY = False
@@ -20,19 +26,21 @@ else:
     print('网络代理状态：未配置。无代理状态下很可能无法访问。')
 
 # 发送请求到OpenAI后，等待多久判定为超时
-TIMEOUT_SECONDS = 25
+TIMEOUT_SECONDS = 30
 
 # 网页的端口, -1代表随机端口
-WEB_PORT = -1
+WEB_PORT = 3003
 
 # 如果OpenAI不响应（网络卡顿、代理失败、KEY失效），重试的次数限制
-MAX_RETRY = 2
+MAX_RETRY = 3
 
 # 选择的OpenAI模型是（gpt4现在只对申请成功的人开放）
-LLM_MODEL = "gpt-3.5-turbo"
+#LLM_MODEL = "gpt-3.5-turbo"
+LLM_MODEL =os.environ.get("GPT_VER")
 
 # 设置并行使用的线程数
 CONCURRENT_COUNT = 100
 
 # 设置用户名和密码
-AUTHENTICATION = [] # [("username", "password"), ("username2", "password2"), ...]
+#AUTHENTICATION = [] # [("username", "password"), ("username2", "password2"), ...]
+AUTHENTICATION=ast.literal_eval(os.environ.get("AUTH"))
